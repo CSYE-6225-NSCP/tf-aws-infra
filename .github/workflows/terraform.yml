@@ -7,9 +7,9 @@ on:
             - main
 
 jobs:
-    terraform-test:
+    build:
         name: terraform actions
-        runs-on: ubuntu latest
+        runs-on: ubuntu-latest
 
         steps:
           - name: checkout repository
