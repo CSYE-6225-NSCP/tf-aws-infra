@@ -1,10 +1,9 @@
 name: terraform workflow
 
 on:
-    workflow_dispatch:
-    pull_request:
-        branches:
-            - main
+   pull_request:
+       branches:
+        - main
 
 jobs:
     build:
@@ -12,22 +11,22 @@ jobs:
         runs-on: ubuntu-latest
 
         steps:
-          - name: checkout repository
-            uses: actions/checkout@v4
+            - name: checkout code
+              uses: actions/checkout@v4
 
-          -  name: installing terraform
-             uses: hashicorp/setup-terraform@v2
-             with:
-              terraform_version: 1.10.5
+            - name: installing terraform
+              uses: hashicorp/setup-terraform@v2
+              with:
+                terraform_version: 1.10.5
 
-          - name: intializing terraform
-            working-directory: dev-infra
-            run: terraform init
+            - name: intializing terraform
+              working-directory: dev-infra
+              run: terraform init
 
-          - name: terraform formatting
-            working-directory: dev-infra
-            run: terraform fmt -recursive -check
+            - name: terraform formatting
+              working-directory: dev-infra
+              run: terraform fmt -recursive -check
             
-          - name: validating terraform
-            working-directory: dev-infra
-            run: terraform validate
+            - name: validating terraform
+              working-directory: dev-infra
+              run: terraform validate
