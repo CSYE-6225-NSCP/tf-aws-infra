@@ -2,6 +2,6 @@ resource "aws_vpc" "main" {
   cidr_block = var.vpc_cidr
 
   tags = {
-    Name = "vpc-${var.aws_region}"
+    Name = "Csye-vpc-${var.aws_region}"
   }
 }
