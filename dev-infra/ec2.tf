@@ -1,7 +1,7 @@
 resource "aws_instance" "web_app" {
   ami                         = var.ami_id
   instance_type               = var.instance_type
-  subnet_id                   = element(aws_subnet.public[*].id, 0) 
+  subnet_id                   = element(aws_subnet.public[*].id, 0)
   vpc_security_group_ids      = [aws_security_group.app_sg.id]
   associate_public_ip_address = true
 
