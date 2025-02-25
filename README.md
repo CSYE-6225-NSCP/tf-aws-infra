@@ -20,6 +20,10 @@ private_subnet_cidrs =
 availability_zones   = 
 public_route_cidr    = -->
 
+
+
+
+
 4. After setting up these perform `terraform fmt`
 5. terraform validate
 6. terraform plan
