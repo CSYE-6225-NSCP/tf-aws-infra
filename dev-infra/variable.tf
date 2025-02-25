@@ -2,7 +2,7 @@ variable "aws_region" {
   default = "us-east-1"
 }
 
-variable "vpc_cidr" {
+variable "vpc_test-345" {
   type = string
 }
 
