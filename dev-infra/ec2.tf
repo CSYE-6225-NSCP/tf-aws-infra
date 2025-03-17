@@ -1,19 +1,38 @@
-resource "aws_instance" "web_app" {
-  ami                         = var.ami_id
-  instance_type               = var.instance_type
-  subnet_id                   = element(aws_subnet.public[*].id, 0)
-  vpc_security_group_ids      = [aws_security_group.app_sg.id]
-  associate_public_ip_address = true
+resource "aws_instance" "csye6225_ec2_instance" {
+  ami                    = var.ami_id
+  instance_type          = var.instance_type
+  subnet_id              = aws_subnet.public[0].id
+  vpc_security_group_ids = [aws_security_group.app_sg.id]
+  iam_instance_profile   = aws_iam_instance_profile.ec2_profile.name
 
   root_block_device {
-    volume_size           = var.root_volume_size
-    volume_type           = var.root_volume_type
+    volume_size           = 25
+    volume_type           = "gp2"
     delete_on_termination = true
   }
 
-  disable_api_termination = false
+  depends_on = [aws_db_instance.mysql]
+
+  user_data = <<-EOT
+#!/bin/bash
+
+echo "hello!"
+
+cat <<EOF | sudo tee /opt/webapp/.env
+DB_HOST=${aws_db_instance.mysql.address}
+DB_PORT=3306
+DB_USER=${var.DB_USER}
+DB_PASSWORD=${var.DB_PASSWORD}
+DB_NAME=${var.DB_NAME}
+SERVER_PORT=${var.SERVER_PORT}
+DB_DIALECT=${var.DB_DIALECT}
+S3_BUCKET_NAME=${aws_s3_bucket.s3_bucket.bucket}
+AWS_REGION=${var.aws_region}
+DB_LOGGING=false
+EOF
+EOT
 
   tags = {
-    Name = "WebAppInstance"
+    Name = "${var.aws_region}-ec2-instance"
   }
 }

@@ -55,3 +55,48 @@ variable "root_volume_type" {
   type        = string
   default     = "gp2"
 }
+
+variable "SERVER_PORT" {
+  description = "Application port"
+  type        = number
+  default     = 8000
+}
+
+variable "DB_NAME" {
+  description = "Database name"
+  type        = string
+  default     = "healthdb"
+}
+
+variable "DB_USER" {
+  description = "Database username"
+  type        = string
+  default     = "root"
+}
+
+variable "DB_PASSWORD" {
+  description = "Database password"
+  type        = string
+  sensitive   = true
+}
+
+variable "key_name" {
+  type = string
+}
+
+variable "DB_LOGGING" {
+  type    = bool
+  default = false
+
+}
+
+variable "DB_DIALECT" {
+  type    = string
+  default = "mysql"
+}
+
+variable "DB_PORT" {
+  type    = number
+  default = 3306
+
+}
