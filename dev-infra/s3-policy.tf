@@ -1,7 +1,7 @@
 # resource "aws_iam_policy" "s3_bucket_policy" {
 #   name        = "S3BucketPolicy"
 #   description = "Policy for creating and managing the S3 bucket"
-  
+
 #   policy = jsonencode({
 #     Version = "2012-10-17"
 #     Statement = [
