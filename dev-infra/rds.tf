@@ -21,11 +21,11 @@ resource "aws_db_subnet_group" "private" {
 
 resource "aws_db_instance" "mysql" {
   identifier             = "csye6225"
-  engine                 = "mysql"
-  engine_version         = "8.0"
-  instance_class         = "db.t3.micro"
-  allocated_storage      = 20
-  storage_type           = "gp2"
+  engine                 = var.engine
+  engine_version         = var.engine_version
+  instance_class         = var.instance_class
+  allocated_storage      = var.db_storage
+  storage_type           = var.storage_type
   db_name                = var.DB_NAME
   username               = var.DB_USER
   password               = var.DB_PASSWORD
@@ -34,4 +34,5 @@ resource "aws_db_instance" "mysql" {
   vpc_security_group_ids = [aws_security_group.db_sg.id]
   publicly_accessible    = false
   skip_final_snapshot    = true
+  multi_az               = var.multi_az
 }
