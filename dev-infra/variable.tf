@@ -100,3 +100,34 @@ variable "DB_PORT" {
   default = 3306
 
 }
+
+
+variable "multi_az" {
+
+}
+
+variable "storage_type" {
+
+}
+
+variable "db_storage" {
+
+}
+
+variable "engine_version" {
+
+}
+
+variable "sse_algorithm" {
+
+}
+
+variable "engine" {
+  type    = string
+  default = "mysql"
+}
+
+variable "instance_class" {
+  type    = string
+  default = "db.t3.micro"
+}
