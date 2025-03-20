@@ -12,6 +12,10 @@ resource "aws_db_parameter_group" "mysql" {
     name  = "character_set_client"
     value = "utf8"
   }
+
+  tags = {
+    Name = "RDS-Security-group"
+  }
 }
 
 resource "aws_db_subnet_group" "private" {
