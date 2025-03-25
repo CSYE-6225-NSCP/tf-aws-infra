@@ -31,6 +31,7 @@ S3_BUCKET_NAME=${aws_s3_bucket.s3_bucket.bucket}
 AWS_REGION=${var.aws_region}
 DB_LOGGING=false
 EOF
+sudo /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-ctl -a fetch-config -m ec2 -c file:/opt/cloudWatch-config.json -s
 EOT
 
   tags = {
