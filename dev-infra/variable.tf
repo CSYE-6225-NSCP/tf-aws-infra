@@ -131,3 +131,15 @@ variable "instance_class" {
   type    = string
   default = "db.t3.micro"
 }
+
+variable "environment" {
+  description = "Environment prefix"
+  type        = string
+  default     = "dev"
+}
+
+variable "domain_name" {
+  type    = string
+  default = "dev.malepati.me"
+
+}
