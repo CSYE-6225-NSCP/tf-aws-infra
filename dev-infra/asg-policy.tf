@@ -1,8 +1,8 @@
 resource "aws_autoscaling_group" "web_app_asg" {
   name                = "csye6225_asg"
-  min_size            = 3
-  max_size            = 5
-  desired_capacity    = 3
+  min_size            = var.min-cpu-size
+  max_size            = var.max-cpu-size
+  desired_capacity    = var.desired-capacity
   health_check_type   = "ELB"
   vpc_zone_identifier = aws_subnet.public[*].id
   target_group_arns   = [aws_lb_target_group.web_app_tg.arn]
@@ -21,15 +21,15 @@ resource "aws_autoscaling_group" "web_app_asg" {
 
 resource "aws_autoscaling_policy" "scale_up" {
   name                   = "scale_up"
-  scaling_adjustment     = 1
+  scaling_adjustment     = var.scaling-adjustment-up
   adjustment_type        = "ChangeInCapacity"
-  cooldown               = 60
+  cooldown               = var.cooldown-period
   autoscaling_group_name = aws_autoscaling_group.web_app_asg.name
 }
 
 resource "aws_autoscaling_policy" "scale_down" {
   name                   = "scale_down"
-  scaling_adjustment     = -1
+  scaling_adjustment     = var.scaling-adjustment-down
   adjustment_type        = "ChangeInCapacity"
   cooldown               = 60
   autoscaling_group_name = aws_autoscaling_group.web_app_asg.name
@@ -41,9 +41,9 @@ resource "aws_cloudwatch_metric_alarm" "high_cpu" {
   evaluation_periods  = 1
   metric_name         = "CPUUtilization"
   namespace           = "AWS/EC2"
-  period              = 120
+  period              = var.high-cpu-period
   statistic           = "Average"
-  threshold           = 6
+  threshold           = var.max-cpu
   alarm_actions       = [aws_autoscaling_policy.scale_up.arn]
   dimensions          = { AutoScalingGroupName = aws_autoscaling_group.web_app_asg.name }
 }
@@ -54,9 +54,9 @@ resource "aws_cloudwatch_metric_alarm" "low_cpu" {
   evaluation_periods  = 1
   metric_name         = "CPUUtilization"
   namespace           = "AWS/EC2"
-  period              = 120
+  period              = var.low-cpu-period
   statistic           = "Average"
-  threshold           = 4
+  threshold           = var.min-cpu
   alarm_actions       = [aws_autoscaling_policy.scale_down.arn]
   dimensions          = { AutoScalingGroupName = aws_autoscaling_group.web_app_asg.name }
 }
