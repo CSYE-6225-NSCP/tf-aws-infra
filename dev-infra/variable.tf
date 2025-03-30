@@ -143,3 +143,38 @@ variable "domain_name" {
   default = "dev.malepati.me"
 
 }
+
+variable "min-cpu" {}
+
+variable "max-cpu" {}
+
+variable "min-cpu-size" {
+}
+
+variable "max-cpu-size" {
+
+}
+
+variable "desired-capacity" {
+
+}
+
+variable "cooldown-period" {
+
+}
+
+variable "scaling-adjustment-down" {
+
+}
+
+variable "scaling-adjustment-up" {
+
+}
+
+variable "high-cpu-period" {
+
+}
+
+variable "low-cpu-period" {
+
+}
