@@ -12,7 +12,7 @@ resource "aws_s3_bucket" "s3_bucket" {
 }
 
 resource "aws_iam_policy" "s3_access_policy" {
-  name        = "S3FullAccessPolicy"
+  name        = "S3AccessPolicy"
   description = "Policy for S3 bucket creation and management"
 
   policy = jsonencode({
