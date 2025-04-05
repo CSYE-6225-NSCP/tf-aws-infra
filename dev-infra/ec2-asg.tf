@@ -13,24 +13,29 @@ resource "aws_launch_template" "asg_launch_template" {
     security_groups             = [aws_security_group.app_sg.id]
   }
 
-  user_data = base64encode(<<-EOT
-#!/bin/bash
-echo "hello!"
-cat <<EOF | sudo tee /opt/webapp/.env
-DB_HOST=${aws_db_instance.mysql.address}
-DB_PORT=3306
-DB_USER=${var.DB_USER}
-DB_PASSWORD=${var.DB_PASSWORD}
-DB_NAME=${var.DB_NAME}
-SERVER_PORT=${var.SERVER_PORT}
-DB_DIALECT=${var.DB_DIALECT}
-S3_BUCKET_NAME=${aws_s3_bucket.s3_bucket.bucket}
-AWS_REGION=${var.aws_region}
-DB_LOGGING=false
-EOF
-sudo /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-ctl -a fetch-config -m ec2 -c file:/opt/cloudWatch-config.json -s
-EOT
-  )
+  block_device_mappings {
+    device_name = "/dev/xvda"
+    ebs {
+      delete_on_termination = true
+      volume_size           = 8
+      volume_type           = var.storage_type
+      encrypted             = true
+      kms_key_id            = aws_kms_key.ec2_key.arn
+    }
+  }
+
+  user_data = base64encode(templatefile("${path.module}/userdata.sh", {
+    DB_NAME        = var.DB_NAME
+    DB_HOST        = "${aws_db_instance.mysql.address}"
+    DB_PASSWORD    = jsondecode(data.aws_secretsmanager_secret_version.db_password.secret_string)["DB_PASSWORD"]
+    DB_PORT        = 3306
+    S3_BUCKET_NAME = "${aws_s3_bucket.s3_bucket.bucket}"
+    DB_DIALECT     = var.DB_DIALECT
+    SERVER_PORT    = var.SERVER_PORT
+    DB_USER        = var.DB_USER
+    AWS_REGION     = var.aws_region
+
+  }))
 
   tag_specifications {
     resource_type = "instance"
