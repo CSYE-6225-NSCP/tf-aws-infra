@@ -178,3 +178,17 @@ variable "high-cpu-period" {
 variable "low-cpu-period" {
 
 }
+
+variable "rotation_lambda_arn" {
+  description = "ARN of the Lambda function for secret rotation"
+  type        = string
+}
+
+variable "account_id" {
+
+}
+
+variable "cli_user" {
+  type = string
+
+}
