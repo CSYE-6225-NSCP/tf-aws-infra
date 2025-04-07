@@ -192,3 +192,7 @@ variable "cli_user" {
   type = string
 
 }
+
+variable "https-port" {
+
+}
