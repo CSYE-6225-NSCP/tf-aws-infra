@@ -25,3 +25,13 @@ public_route_cidr    = -->
 6. terraform plan
 7. terraform apply -auto-approve
 8. To destroy the infra perform the `terraform destroy -auto-approve`
+
+SSL CERTIFICATE:
+
+TO IMPORT THE CERTIFICATE:
+
+aws acm import-certificate \
+  --certificate fileb://demo_malepati_me.crt \
+  --private-key fileb://private.key \
+  --certificate-chain fileb://demo_malepati_me.ca-bundle \
+  --region us-east-1
