@@ -133,7 +133,7 @@ variable "instance_class" {
 }
 
 variable "domain_name" {
-  type    = string
+  type = string
 }
 
 variable "min-cpu" {}
