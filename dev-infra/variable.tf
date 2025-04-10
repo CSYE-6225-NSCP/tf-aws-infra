@@ -132,16 +132,8 @@ variable "instance_class" {
   default = "db.t3.micro"
 }
 
-variable "environment" {
-  description = "Environment prefix"
-  type        = string
-  default     = "dev"
-}
-
 variable "domain_name" {
   type    = string
-  default = "dev.malepati.me"
-
 }
 
 variable "min-cpu" {}
@@ -178,12 +170,6 @@ variable "high-cpu-period" {
 variable "low-cpu-period" {
 
 }
-
-variable "rotation_lambda_arn" {
-  description = "ARN of the Lambda function for secret rotation"
-  type        = string
-}
-
 variable "account_id" {
 
 }
