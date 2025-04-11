@@ -1,8 +1,9 @@
 resource "aws_launch_template" "asg_launch_template" {
-  name_prefix   = "csye6225_asg_"
-  image_id      = var.ami_id
-  instance_type = var.instance_type
-  key_name      = var.key_name
+  name_prefix            = "csye6225_asg_"
+  image_id               = var.ami_id
+  instance_type          = var.instance_type
+  key_name               = var.key_name
+  update_default_version = true
 
   iam_instance_profile {
     name = aws_iam_instance_profile.ec2_profile.name
