@@ -13,6 +13,7 @@ resource "aws_launch_template" "asg_launch_template" {
     security_groups             = [aws_security_group.app_sg.id]
   }
 
+
   block_device_mappings {
     device_name = "/dev/xvda"
     ebs {
