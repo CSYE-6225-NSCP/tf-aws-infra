@@ -27,7 +27,7 @@ resource "aws_launch_template" "asg_launch_template" {
 
 
   user_data = base64encode(templatefile("${path.module}/userdata.sh", {
-    secret_name = aws_secretsmanager_secret.db_password_secret.name
+    secret_name    = aws_secretsmanager_secret.db_password_secret.name
     DB_NAME        = var.DB_NAME
     DB_HOST        = "${aws_db_instance.mysql.address}"
     DB_PORT        = 3306
