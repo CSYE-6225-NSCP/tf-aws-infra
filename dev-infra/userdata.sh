@@ -1,11 +1,17 @@
 #!/bin/bash
 echo "Hello World!"
 
+# shellcheck disable=SC2154
+
+aws secretsmanager get-secret-value \
+  --secret-id "${secret_name}" \
+  --region us-east-1 \
+  --query SecretString \
+  --output text | jq -r 'to_entries[] | "\(.key)=\(.value)"' | sudo tee /opt/webapp/.env
+
 sudo echo "DB_NAME=${DB_NAME}" | sudo tee -a /opt/webapp/.env
 
 sudo echo "DB_HOST=${DB_HOST}" | sudo tee -a /opt/webapp/.env
-
-sudo echo "DB_PASSWORD=${DB_PASSWORD}" | sudo tee -a /opt/webapp/.env
 
 sudo echo "DB_USER=${DB_USER}" | sudo tee -a /opt/webapp/.env
 

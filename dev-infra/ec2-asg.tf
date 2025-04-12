@@ -27,9 +27,9 @@ resource "aws_launch_template" "asg_launch_template" {
 
 
   user_data = base64encode(templatefile("${path.module}/userdata.sh", {
+    secret_name = aws_secretsmanager_secret.db_password_secret.name
     DB_NAME        = var.DB_NAME
     DB_HOST        = "${aws_db_instance.mysql.address}"
-    DB_PASSWORD    = jsondecode(data.aws_secretsmanager_secret_version.db_password.secret_string)["DB_PASSWORD"]
     DB_PORT        = 3306
     S3_BUCKET_NAME = "${aws_s3_bucket.s3_bucket.bucket}"
     DB_DIALECT     = var.DB_DIALECT
